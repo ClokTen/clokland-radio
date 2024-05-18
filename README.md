@@ -1,6 +1,4 @@
-# clokland-radio
-ClokLand Radio Live 24/7
-# ClokLand Radio
+# ClokLand Radio Live 24/7
 
 ClokLand Radio is a decentralized radio platform that allows users to stream music tracks 24/7 while managing the tracks in a decentralized manner. This project includes both backend and frontend components for seamless integration and deployment.
 
