@@ -1,58 +1,33 @@
-(define-data-var track-storage (list (tuple (id int) (title string) (url string))))
+(define (get-track (track-id uint))
+  (let ((track (map-get? tracks track-id)))
+    (if (is-none track)
+      (err u404) ; Track not found
+      (unwrap track))))
 
-(define-public (add-track id title url)
-  (require (is-equal? (caller) (principal "your-address-here")))
-  (let ((new-track (tuple (id id) (title title) (url url))))
-    (ok (set track-storage (append track-storage (list new-track))))
-  )
-)
-
-(define-public (get-all-tracks)
-  (ok track-storage)
-)
-
-(define-data-var total-visitors (uint))
-
-(define-public (increment-total-visitors)
-  (ok (set total-visitors (+ total-visitors 1)))
-)
-
-(define-public (get-total-visitors)
-  (ok total-visitors)
-)
-
-(define-data-var unique-visitors (set))
-
-(define-public (add-unique-visitor address)
-  (ok (set unique-visitors (add unique-visitors address)))
-)
-
-(define-public (get-unique-visitors)
-  (ok unique-visitors)
-)
-
-(define-data-var song-requests (list (tuple (sender principal) (song string))))
-
-(define-public (submit-song-request song)
-  (let ((sender (tx-sender)))
-    (ok (set song-requests (append song-requests (list (tuple (sender sender) (song song))))))
-  )
-)
-
-(define-public (get-song-requests)
-  (ok song-requests)
-)
-
-(define-data-var streaming-service-url (string ""))
-
-(define-public (set-streaming-service-url new-url)
-  (require (is-equal? (caller) (principal "your-address-here")))
+(define (add-track (track-id uint) (track-url (string-ascii 100)))
   (begin
-    (ok (set streaming-service-url new-url))
-    (ok "Streaming service URL updated successfully")
-  )
-)
+    (map-set tracks track-id track-url)
+    (ok true)))
 
-(define-public (get-streaming-service-url)
-  (ok streaming-service-url)
-)
+(define (remove-track (track-id uint))
+  (let ((existing (map-get? tracks track-id)))
+    (if (is-none existing)
+      (err u404) ; Track not found
+      (begin
+        (map-delete tracks track-id)
+        (ok true)))))
+
+(define-map tracks
+  ((track-id uint)) ; Key: track ID
+  ((track-url (string-ascii 100)))) ; Value: track URL
+
+(define-public (add-new-track (track-id uint) (track-url (string-ascii 100)))
+  (if (not (is-none (map-get? tracks track-id)))
+    (err u409) ; Track already exists
+    (add-track track-id track-url)))
+
+(define-public (delete-track (track-id uint))
+  (remove-track track-id))
+
+(define-public (get-track-url (track-id uint))
+  (get-track track-id))
