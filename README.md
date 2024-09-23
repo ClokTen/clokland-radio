@@ -1,59 +1,85 @@
+# ClokLand 24/7 Radio dApp
 
----
-
-# ClokLand Radio
-
-ClokLand Radio is a decentralized radio platform built on the Stacks blockchain. It offers 24/7 streaming, track management, song requests, and visitor analytics features.
-
-[ClokLand Radio](clokland-radio.png)
+**ClokLand 24/7 Radio** is a decentralized streaming platform designed to broadcast hip-hop music and radio content around the clock. Built on IPFS for decentralized storage, ClokLand Radio ensures that content is available globally without centralized control.
 
 ## Features
 
-- **24/7 Streaming**: Enjoy continuous streaming of music tracks.
-- **Track Management**: Add and manage tracks on the platform.
-- **Song Requests**: Submit song requests via email entry wizard on the UI.
-- **Visitor Analytics**: Track total and unique visitors to the platform.
-- **Free Streaming Service**: Access the free 24-hour radio streaming service.
+- **24/7 Streaming**: Non-stop hip-hop music, podcasts, and more.
+- **Decentralized Storage**: Audio files are hosted on IPFS for resilient, decentralized access.
+- **$CLOK10 Integration** (coming soon): Future plans to reward listeners with $CLOK10 tokens for engagement.
+
+## Tech Stack
+
+- **Frontend**: React.js
+- **Storage**: IPFS (InterPlanetary File System)
+- **Blockchain**: Stacks (future $CLOK10 rewards)
+- **Audio Streaming**: HTML5 audio via IPFS links
 
 ## Installation
 
-```bash
-git clone https://github.com/your-github-username/clokland-radio.git
-cd clokland-radio
+### Prerequisites
+
+- **Node.js** (version 14+)
+- **npm** or **yarn**
+- **IPFS Account** (e.g., [Pinata](https://pinata.cloud/))
+- **Stacks Wallet** (optional for blockchain integration)
+
+### Steps
+
+1. **Clone the repository**:
+
+   ```bash
+   git clone https://github.com/your-username/clokland-24-7-radio.git
+   cd clokland-24-7-radio
+
+   Install dependencies:
+Using npm:
+
+bash
+Copy code
 npm install
-```
+Or using yarn:
 
-## Usage
+bash
+Copy code
+yarn install
+Upload Audio Files to IPFS:
+Sign up at Pinata or set up your own IPFS node.
+Upload your audio files and obtain the IPFS content hash (CID) for each file.
+Configure the IPFS Links:
+Open src/RadioStream.js and replace the placeholder <your-ipfs-hash> with the IPFS CID of your audio file.
 
-```bash
+Example:
+
+javascript
+Copy code
+<audio controls autoPlay loop>
+  <source src="https://gateway.pinata.cloud/ipfs/<your-ipfs-hash>" type="audio/mp3" />
+  Your browser does not support the audio element.
+</audio>
+Replace <your-ipfs-hash> with the CID of your IPFS-hosted audio.
+Run the application:
+Using npm:
+
+bash
+Copy code
 npm start
-```
+Or using yarn:
 
-Visit [http://localhost:3000](http://localhost:3000) in your web browser to access the ClokLand Radio application.
+bash
+Copy code
+yarn start
+The app will run at http://localhost:3000.
+Deployment
 
-## How to Use
+Build the app:
+bash
+Copy code
+npm run build
+Or using yarn:
 
-- **Adding Tracks**: Only accessible by the contract owner. Use the "Add Track" button in the UI to add new tracks.
-- **Retrieving Track Information**: Accessible to all users. Use the UI to view available track information.
-- **Submitting Song Requests**: Users can submit song requests via the email entry wizard on the UI.
-- **Managing Streaming Service**: Only accessible by the contract owner. Use the UI to set and manage the URL for the free 24-hour radio streaming service.
-- **Viewing Visitor Analytics**: Hit counters are visible to all users, providing insights into platform engagement.
-
-## Technologies Used
-
-- **Smart Contract**: Clarity
-- **Frontend**: React.js, Bootstrap
-- **Backend**: Node.js, Express.js
-- **Blockchain**: Stacks
-- **IPFS**: InterPlanetary File System for decentralized file storage
-- **Messaging Service**: Twilio for handling song requests via email entry wizard
-
-## Contributing
-
-Contributions are welcome! Please fork the repository, make your changes, and submit a pull request.
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).
-
----
+bash
+Copy code
+yarn build
+Deploy the build folder:
+Upload the contents of the build folder to a static hosting provider such as Vercel, Netlify, or GitHub Pages.
